@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Employee List</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>RFID Card</th>
+                    <th>Job Description</th>
+                    <th>Expiration Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.name }}</td>
+                    <td>{{ employee.rfid_card }}</td>
+                    <td>{{ employee.job_description }}</td>
+                    <td>{{ employee.expire_date }}</td>
+                    <td>{% if employee.is_active %} Active {% else %} Expired {% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'employee_create' %}" class="btn btn-primary">Add New Employee</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!-- templates/employees/user_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User List</title>
+</head>
+<body>
+    <h1>Users on ZKTeco Device</h1>
+    <table border="1">
+        <tr>
+            <th>Badge Number</th>
+            <th>Name</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.Badge_Number }}</td>
+            <td>{{ user.name }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="2">No users found</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
