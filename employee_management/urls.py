@@ -5,7 +5,8 @@ from employees import views as employee_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',employee_views.home_page,name='home'),
     path('employees/new/', employee_views.employee_create_view, name='employee_create'),
     path('employees/', employee_views.employee_list_view, name='employee_list'),
-    path('user-list/', employee_views.user_list_view, name='user_list'),
+    path('user_list/', employee_views.user_list_view, name='user_list'),
 ]

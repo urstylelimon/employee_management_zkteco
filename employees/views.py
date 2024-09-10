@@ -4,6 +4,10 @@ from .models import Employee
 from .forms import EmployeeForm
 from zk import ZK
 
+
+def home_page(request):
+    return render(request,'employees/home.html')
+
 def add_employee_to_zkteco(employee):
     zk_ip = '192.168.1.5'  # Replace with your ZKTeco machine IP
     port = 4370
