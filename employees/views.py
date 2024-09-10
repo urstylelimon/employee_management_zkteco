@@ -31,8 +31,17 @@ def add_employee_to_zkteco(employee):
         # Convert RFID card number to Badge Number if needed
         # Placeholder for conversion logic if different format is needed
         badge_number = rfid_card_number  # Adjust this based on your Badge Number format
-        uid = employee.id
+
         print(f"Setting user with Badge Number: {badge_number}")
+        uid = 0
+        users = conn.get_users()
+        if users:
+            for user in users:
+                id = user.uid
+            uid = id + 1
+
+        else:
+            uid = 1
 
         # Set user data on the ZKTeco machine
         conn.set_user(uid= uid ,card=badge_number, name=employee.name)
@@ -95,7 +104,7 @@ def user_list_view(request):
         zk_users = conn.get_users()
         if zk_users:
             for user in zk_users:
-                users.append({'Badge_Number': user.card, 'name': user.name})
+                users.append({'id':user.uid,'Badge_Number': user.card, 'name': user.name})
         else:
             print("No users found on ZKTeco device.")
 
