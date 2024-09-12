@@ -6,7 +6,12 @@ from zk import ZK
 
 
 def home_page(request):
-    return render(request,'employees/home.html')
+    context = {
+        'total_employee_count': 100,
+        'active_employee_count': 40,
+        'inactive_employee_count': 60
+    }
+    return render(request,'employees/home.html',context)
 
 def add_employee_to_zkteco(employee):
     zk_ip = '192.168.1.5'  # Replace with your ZKTeco machine IP
@@ -75,6 +80,7 @@ def employee_create_view(request):
         form = EmployeeForm(request.POST)
         if form.is_valid():
             employee = form.save(commit=False)
+            employee.rfid_card = int(employee.rfid_card)
             employee.save()
             add_employee_to_zkteco(employee)
             return redirect('employee_list')

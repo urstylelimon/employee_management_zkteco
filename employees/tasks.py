@@ -1,4 +1,6 @@
 # employees/tasks.py
+from django.core.exceptions import ObjectDoesNotExist
+
 from .models import Employee
 from datetime import date
 from zk import ZK
@@ -47,19 +49,19 @@ def check_and_remove_expired_employees():
 
         # Remove expired employees from the machine
         for user in machine_users:
-            print(user.name, user.card)
-            object1 = Employee.objects.get(name=user.name)
-            print(object1.name, object1.rfid_card)
+            try:
+                object1 = Employee.objects.get(rfid_card=user.card)
+                print(object1.name, object1.rfid_card)
+                if object1.expire_date <= date.today():
+                    print("Find one person", object1.name)
+                    object1.is_active = False
+                    object1.save()
+                    remove_employee_from_zkteco(user)
+                else:
+                    print("No one still Expired Now")
 
-            if object1.expire_date >= date.today():
-                print("Find one person",object1.name)
-                object1.is_active = False
-                object1.save()
-                remove_employee_from_zkteco(user)
-            else:
-                print("No one still Expired Now")
-
-
+            except ObjectDoesNotExist:
+                continue
 
     except Exception as e:
         print(f"Error during synchronization: {e}")

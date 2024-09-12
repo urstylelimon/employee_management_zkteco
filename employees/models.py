@@ -4,7 +4,7 @@ from datetime import date
 
 class Employee(models.Model):
     name = models.CharField(max_length=100)
-    rfid_card = models.CharField(max_length=50, unique=True)
+    rfid_card = models.BigIntegerField(unique=True)
     job_description = models.CharField(max_length=100)
     expire_date = models.DateField()
     is_active = models.BooleanField(default=True)

@@ -1,8 +1,136 @@
 {% extends 'employees/base.html' %}
+{% load static %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Dashboard{% endblock %}
+
+{% block css %}
+<style>
+    .container {
+        padding: 20px;
+    }
+    .chart-container {
+        display: flex;
+        align-items: center;
+    }
+    .chart {
+        flex: 1;
+        max-width: 400px; /* Adjust the width of the chart */
+        margin-right: 20px; /* Space between chart and details */
+    }
+    .details {
+        flex: 1;
+    }
+    .card {
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    .card-header {
+        background-color: #f8f9fa;
+        font-size: 1.2rem;
+        font-weight: 600;
+        padding: 15px;
+        border-bottom: 1px solid #e3e3e3;
+    }
+    .card-body {
+        padding: 15px;
+    }
+    canvas {
+        max-height: 300px; /* Adjust the height as needed */
+        max-width: 100%;
+    }
+    .details-content {
+        padding: 15px;
+        border-left: 1px solid #e3e3e3; /* Border to separate from chart */
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-    <h1>Welcome to My Website</h1>
-    <p>This is the home page content.</p>
+<div class="container">
+    <header>
+        <h1 class="mb-4">Dashboard</h1>
+    </header>
+    <div class="chart-container">
+        <!-- Active Employees Chart -->
+        <div class="chart">
+            <div class="card">
+                <div class="card-header">
+                    Active Employees
+                </div>
+                <div class="card-body">
+                    <canvas id="activeEmployeesChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Section -->
+        <div class="details">
+            <div class="card">
+                <div class="card-header">
+                    Employee Details
+                </div>
+                <div class="card-body details-content">
+                    <p><strong>Total Employees:</strong> {{ total_employee_count }}</p>
+                    <p><strong>Active Employees:</strong> {{ active_employee_count }}</p>
+                    <p><strong>Inactive Employees:</strong> {{ inactiveEmployeeCount }}</p>
+                    <!-- Add more details as needed -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // JavaScript variables populated with Django context variables
+    const totalEmployeeCount = {{ total_employee_count|safe }};
+    const activeEmployeeCount = {{ active_employee_count|safe }};
+    const inactiveEmployeeCount = totalEmployeeCount - activeEmployeeCount;
+
+    // Active Employees Chart
+    const activeEmployeesCtx = document.getElementById('activeEmployeesChart').getContext('2d');
+    new Chart(activeEmployeesCtx, {
+        type: 'doughnut', // Using doughnut for a compact and modern look
+        data: {
+            labels: ['Active Employees', 'Inactive Employees'],
+            datasets: [{
+                data: [activeEmployeeCount, inactiveEmployeeCount],
+                backgroundColor: ['#4caf50', '#ff5722'], // Green and Red colors
+                borderColor: ['#4caf50', '#ff5722'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // Make the chart responsive
+            plugins: {
+                legend: {
+                    position: 'top', // Position the legend at the top
+                    labels: {
+                        color: '#333'
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed !== null) {
+                                label += `${context.raw}`;
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
 {% endblock %}
