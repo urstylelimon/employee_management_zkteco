@@ -6,42 +6,56 @@
 {% block css %}
 <style>
     .container {
-        padding: 20px;
+        padding: 30px;
+        background-color: #f4f7f6;
+    }
+    header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    h1 {
+        font-size: 2.5rem;
+        color: #333;
+        font-weight: 600;
     }
     .chart-container {
         display: flex;
-        align-items: center;
+        justify-content: space-between;
+        gap: 30px;
+        flex-wrap: wrap; /* Allow wrapping for responsiveness */
     }
     .chart {
         flex: 1;
-        max-width: 400px; /* Adjust the width of the chart */
-        margin-right: 20px; /* Space between chart and details */
-    }
-    .details {
-        flex: 1;
+        min-width: 300px; /* Ensure charts have a minimum width */
     }
     .card {
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         overflow: hidden;
+        background: #ffffff;
+        padding: 20px;
     }
     .card-header {
-        background-color: #f8f9fa;
-        font-size: 1.2rem;
-        font-weight: 600;
+        background-color: #007bff;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-align: center;
         padding: 15px;
-        border-bottom: 1px solid #e3e3e3;
+        border-bottom: 1px solid #0056b3;
     }
     .card-body {
-        padding: 15px;
+        padding: 20px;
     }
     canvas {
-        max-height: 300px; /* Adjust the height as needed */
-        max-width: 100%;
+        height: 300px; /* Fixed height for better layout */
+        width: 100%;
     }
     .details-content {
         padding: 15px;
-        border-left: 1px solid #e3e3e3; /* Border to separate from chart */
+        border-top: 1px solid #e3e3e3; /* Border to separate from chart */
+        font-size: 1.2rem;
+        color: #555;
     }
 </style>
 {% endblock %}
@@ -49,23 +63,23 @@
 {% block content %}
 <div class="container">
     <header>
-        <h1 class="mb-4">Dashboard</h1>
+        <h1>Dashboard</h1>
     </header>
     <div class="chart-container">
-        <!-- Active Employees Chart -->
+        <!-- Employee Overview Line Chart -->
         <div class="chart">
             <div class="card">
                 <div class="card-header">
-                    Active Employees
+                    Employee Overview
                 </div>
                 <div class="card-body">
-                    <canvas id="activeEmployeesChart"></canvas>
+                    <canvas id="employeeOverviewChart"></canvas>
                 </div>
             </div>
         </div>
 
-        <!-- Details Section -->
-        <div class="details">
+        <!-- Employee Details Section -->
+        <div class="chart">
             <div class="card">
                 <div class="card-header">
                     Employee Details
@@ -73,7 +87,7 @@
                 <div class="card-body details-content">
                     <p><strong>Total Employees:</strong> {{ total_employee_count }}</p>
                     <p><strong>Active Employees:</strong> {{ active_employee_count }}</p>
-                    <p><strong>Inactive Employees:</strong> {{ inactiveEmployeeCount }}</p>
+                    <p><strong>Inactive Employees:</strong> {{ inactive_employee_count }}</p>
                     <!-- Add more details as needed -->
                 </div>
             </div>
@@ -83,7 +97,6 @@
 
 {% endblock %}
 
-
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -92,22 +105,40 @@
     const activeEmployeeCount = {{ active_employee_count|safe }};
     const inactiveEmployeeCount = totalEmployeeCount - activeEmployeeCount;
 
-    // Active Employees Chart
-    const activeEmployeesCtx = document.getElementById('activeEmployeesChart').getContext('2d');
-    new Chart(activeEmployeesCtx, {
-        type: 'doughnut', // Using doughnut for a compact and modern look
+    // Employee Overview Line Chart
+    const employeeOverviewCtx = document.getElementById('employeeOverviewChart').getContext('2d');
+    new Chart(employeeOverviewCtx, {
+        type: 'line',
         data: {
-            labels: ['Active Employees', 'Inactive Employees'],
-            datasets: [{
-                data: [activeEmployeeCount, inactiveEmployeeCount],
-                backgroundColor: ['#4caf50', '#ff5722'], // Green and Red colors
-                borderColor: ['#4caf50', '#ff5722'],
-                borderWidth: 1
-            }]
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'], // Example time period
+            datasets: [
+                {
+                    label: 'Active Employees',
+                    data: [25, 30, 35, 40, 45, 50, activeEmployeeCount], // Replace with dynamic data
+                    backgroundColor: 'rgba(76, 175, 80, 0.2)', // Green with opacity
+                    borderColor: '#4caf50', // Green color
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3 // Smooth curves
+                },
+                {
+                    label: 'Inactive Employees',
+                    data: [10, 15, 20, 25, 30, 35, inactiveEmployeeCount], // Replace with dynamic data
+                    backgroundColor: 'rgba(255, 87, 34, 0.2)', // Red with opacity
+                    borderColor: '#ff5722', // Red color
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3 // Smooth curves
+                }
+            ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false, // Make the chart responsive
+            animation: {
+                duration: 2000, // 2 seconds
+                easing: 'easeInOutCubic'
+            },
             plugins: {
                 legend: {
                     position: 'top', // Position the legend at the top
@@ -118,15 +149,35 @@
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            let label = context.label || '';
+                            let label = context.dataset.label || '';
                             if (label) {
                                 label += ': ';
                             }
                             if (context.parsed !== null) {
-                                label += `${context.raw}`;
+                                label += `${context.parsed.y}`;
                             }
                             return label;
                         }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    grid: {
+                        color: '#e3e3e3'
+                    },
+                    ticks: {
+                        color: '#555'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: '#e3e3e3'
+                    },
+                    ticks: {
+                        color: '#555'
                     }
                 }
             }

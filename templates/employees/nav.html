@@ -1,6 +1,42 @@
-<nav>
-    <ul>
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'employee_list' %}">About</a></li>
-    </ul>
-</nav>
+{#<nav>#}
+{#    <ul>#}
+{#        <li><a href="{% url 'home' %}">Home</a></li>#}
+{#        <li><a href="{% url 'employee_list' %}">About</a></li>#}
+{#    </ul>#}
+{#</nav>#}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Project{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+    {% block css %}{% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="navbar-brand">My Project</a>
+            <ul class="navbar-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/add-new/">Add New</a></li>
+                <li><a href="/all-employees/">All Employees</a></li>
+                <li><a href="/employees-in-machine/">Employees in Machine</a></li>
+                <li><a href="/staff/">Staff</a></li>
+            </ul>
+            <button class="navbar-toggle" id="navbarToggle">
+                <span class="navbar-toggle-icon"></span>
+            </button>
+        </div>
+    </nav>
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block js %}{% endblock %}
+</body>
+</html>
