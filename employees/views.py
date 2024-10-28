@@ -3,8 +3,6 @@ from django.shortcuts import render, redirect
 from .models import Employee
 from .forms import EmployeeForm
 from zk import ZK
-
-
 def home_page(request):
     context = {
         'total_employee_count': 100,

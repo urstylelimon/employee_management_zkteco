@@ -6,29 +6,15 @@
 
     {% load static %}
 
-    <!-- Block for adding CSS files specific to each child template -->
-    {% block css %}
-    {% endblock %}
-
-
+    {% block css %}{% endblock %}
 </head>
 <body>
 
-<!-- Include navbar -->
-{% include 'employees/nav.html' %}
+    {% include 'employees/nav.html' %}
+    
+    {% block content %}{% endblock %}
 
-
-    <div class="container">
-        {% block content %}
-        <!-- Content specific to each page will go here -->
-        {% endblock %}
-    </div>
-
-    <!-- Include footer -->
-
-    {% block js %}
-    <!-- Default JS can be included here if needed -->
-    {% endblock %}
+    {% block js %}{% endblock %}
 
 </body>
 </html>

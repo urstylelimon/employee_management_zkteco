@@ -1,0 +1,109 @@
+/* Base styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #e9ecef; /* Slightly darker light background */
+    color: #343a40; /* Dark text for readability */
+}
+
+.container {
+    max-width: 1100px; /* Wider container */
+    margin: 40px auto; /* Center horizontally */
+    padding-right: 15px;  /* 15 pixels on the right */
+    padding-bottom: 10px; /* 10 pixels on the bottom */
+    padding-left: 5px;
+    background-color: #ffffff; /* White background for content */
+    border-radius: 10px; /* More rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow */
+}
+
+/* Headings */
+h4 {
+    text-align: center; /* Centered heading */
+    font-size: 2em; /* Larger heading */
+    color: #007bff; /* Primary color for headings */
+    margin-bottom: 20px; /* Spacing below heading */
+}
+
+/* Input and button styles */
+.input-group .form-control,
+.input-group .form-select {
+    border: 2px solid #ced4da; /* Slightly thicker border */
+    border-radius: 5px; /* Slightly rounded borders */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth border color transition */
+    margin-top: 20px;
+}
+
+.input-group .form-control:focus,
+.input-group .form-select:focus {
+    border-color: #007bff; /* Highlight border on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Light shadow for focus */
+}
+
+/* Button styles */
+.btn {
+    background-color: #909398; /* Primary color */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 1.1em; /* Increased font size */
+    font-weight: bold; /* Bold text */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.btn:hover {
+    background-color: #676b70; /* Darken button on hover */
+   /* Slight lift effect on hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.btn:active {
+    transform: translateY(0); /* Reset transform on click */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Original shadow on active */
+}
+
+
+/* Table styles */
+.table {
+    width: 100%; /* Full width table */
+    margin-top: 20px; /* Spacing above table */
+    border-collapse: collapse; /* Collapse borders */
+}
+
+.table th, .table td {
+    padding: 15px; /* Increased padding for cells */
+    text-align: left; /* Left-align text */
+    border-bottom: 2px solid #dee2e6; /* Thicker bottom border for rows */
+    transition: background-color 0.3s; /* Smooth background transition */
+}
+
+.table th {
+    background-color: #f1f1f1; /* Light gray background for header */
+    color: #495057; /* Darker text for header */
+    font-weight: bold; /* Bold text for header */
+}
+
+.table tr:hover {
+    background-color: rgba(204, 202, 194, 0.46); /* Highlight row on hover */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .input-group {
+        flex-direction: column; /* Stack input elements on smaller screens */
+    }
+
+    .input-group .form-control,
+    .input-group .form-select {
+        margin-bottom: 10px; /* Space between stacked elements */
+    }
+
+    .btn {
+        width: 100%; /* Full-width buttons on small screens */
+    }
+}
