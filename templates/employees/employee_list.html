@@ -39,8 +39,8 @@
                     <td>{{ employee.name }}</td>
                     <td>{{ employee.rfid_card }}</td>
                     <td>{{ employee.job_description }}</td>
-                    <td>Road 12</td>
-                    <td>23/KA</td>
+                    <td>{{ employee.road_number }}</td>
+                    <td>{{ employee.house_number }}</td>
                     <td>{{ employee.expire_date }}</td>
                     <td>{% if employee.is_active %} Active {% else %} Expired {% endif %}</td>
                 </tr>

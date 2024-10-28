@@ -1,28 +1,32 @@
-<!-- templates/employees/user_list.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>User List</title>
-</head>
-<body>
-    <h1>Users on ZKTeco Device</h1>
-    <table border="1">
-        <tr> 
-            <th>UID</th>
-            <th>Badge Number</th>
-            <th>Name</th>
-        </tr>
-        {% for user in users %}
-        <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.Badge_Number }}</td>
-            <td>{{ user.name }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="2">No users found</td>
-        </tr>
-        {% endfor %}
-    </table>
-</body>
-</html>
+{% extends 'employees/base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/user_list.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+        <h1>Users on ZKTeco Device</h1>
+        <table>
+            <thead>
+                <tr> 
+                    <th>UID</th>
+                    <th>RFID Number</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.Badge_Number }}</td>
+                    <td>{{ user.name }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No users found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
