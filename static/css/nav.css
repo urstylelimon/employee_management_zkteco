@@ -5,14 +5,14 @@ body {
     padding: 0;
     box-sizing: border-box;
     background-color: #f8f9fa; /* Light background for body */
-    color: #333; /* Dark text color */
+    color: #100101; /* Dark text color */
 }
 
 .navbar {
-    background-color: #252325; /* Dark background for the navbar */
+    background-color: #201c1c; /* Dark background for the navbar */
     color: #f0f0f5; /* Light text color for navbar */
     padding: 10px 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
     position: relative;
     z-index: 10;
     transition: background-color 0.5s;

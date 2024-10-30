@@ -80,6 +80,7 @@ h4 {
     text-align: left; /* Left-align text */
     border-bottom: 2px solid #dee2e6; /* Thicker bottom border for rows */
     transition: background-color 0.3s; /* Smooth background transition */
+
 }
 
 .table th {
@@ -106,4 +107,7 @@ h4 {
     .btn {
         width: 100%; /* Full-width buttons on small screens */
     }
+}
+.hyp_text{
+    text-decoration: none;
 }

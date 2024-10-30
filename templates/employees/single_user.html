@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Details</title>
+</head>
+<body>
+    <h1>Employee Details</h1>
+    <h2>Name: {{ single_employee.name }}</h2>
+    <p>RFID Card: {{ single_employee.rfid_card }}</p>
+    <p>Status: {% if single_employee.is_active %}Active{% else %}Expired{% endif %}</p>
+    
+    <form action="{% url 'toggle_employee_status' single_employee.pk %}" method="post">
+        {% csrf_token %}
+        <label>
+            <input type="radio" name="action" value="activate" {% if single_employee.is_active %}checked{% endif %}>
+            Activate
+        </label>
+        <label>
+            <input type="radio" name="action" value="deactivate" {% if not single_employee.is_active %}checked{% endif %}>
+            Deactivate
+        </label>
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+</html>

@@ -2,20 +2,20 @@
 {% load static %}
 {% block content %}
 
+<head>
     <title>Add Employee</title>
-    
+    <link rel="stylesheet" href="{% static 'css/employee_form.css' %}">
 </head>
+
 <body>
-    <div class="container">
-        <h2>Add New Employee</h2>
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Add Employee</button>
-        </form>
-        <a href="{% url 'employee_list' %}" class="btn btn-link">View All Employees</a>
-    </div>
+    <div class="container employee-form-container">
+    <h2>Add New Employee</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Add Employee</button>
+    </form>
+</div>
 </body>
-</html>
 
 {% endblock %}

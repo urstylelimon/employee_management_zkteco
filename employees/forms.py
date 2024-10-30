@@ -7,7 +7,7 @@ class EmployeeForm(forms.ModelForm):
         model = Employee
         fields = ['name', 'rfid_card', 'job_description', 'road_number', 'house_number', 'expire_date']
         widgets = {
-            'expire_date': forms.DateInput(attrs={'type': 'date'}),
+            'expire_date': forms.DateInput(attrs={'type': 'date','class': 'custom-input'}),
             'name': forms.TextInput(attrs={'placeholder': 'Enter employee name'}),
             'job_description': forms.TextInput(attrs={'placeholder': 'Enter job description'}),
             'house_number': forms.TextInput(attrs={'placeholder': 'Enter house number'}),

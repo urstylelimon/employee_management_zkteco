@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .models import Employee
 from datetime import date
 from zk import ZK
+from django.utils import timezone
 
 def remove_employee_from_zkteco(employee):
     zk = ZK('192.168.1.5', port=4370, timeout=5)
@@ -23,6 +24,12 @@ def remove_employee_from_zkteco(employee):
         conn.delete_user(uid=employee.uid)  # Ensure correct format for delete_user
         print(f" Successfully Deleted {employee.name}")
         conn.enable_device()
+
+        # Mark the employee as expired in the local database
+        employee.is_active = False
+        employee.expire_date = timezone.now()  # Optionally set expire_date to current date
+        employee.save(update_fields=['is_active', 'expire_date'])
+        print(f"Employee {employee.name} marked as expired in the database.")
 
     except Exception as e:
         print(f"Error removing user {employee.name}: {e}")

@@ -1,0 +1,110 @@
+/* Variables for colors */
+:root {
+    --primary-color: #4CAF50;
+    --hover-color: #45a049;
+    --text-color: #333;
+    --background-color: #fff;
+    --border-color: #ccc;
+}
+
+/* General Container Styling */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: var(--background-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    font-size: 1.8rem; /* Responsive font size */
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+}
+
+input, select, textarea {
+    width: 90%; /* Set fixed width for input fields */
+    max-width: 250px; /* Optional: maximum width */
+    padding: 8px; /* Reduced padding */
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.9rem; /* Reduced font size */
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color);
+}
+
+/* Submit Button */
+.btn-primary {
+    grid-column: span 2;
+    padding: 8px; /* Adjusted padding for the button */
+    font-size: 1rem;
+    color: #fff;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background: var(--hover-color);
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    margin-top: 40px;
+    border-collapse: collapse;
+}
+
+thead {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+th, td {
+    padding: 12px;
+    font-size: 1rem;
+    text-align: left;
+}
+
+tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+tbody tr:hover {
+    background: #e9f6e9;
+}
+
+tbody tr td[colspan="3"] {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+
+    th, td {
+        font-size: 0.9rem;
+    }
+
+    .btn-primary {
+        font-size: 0.9rem;
+    }
+}

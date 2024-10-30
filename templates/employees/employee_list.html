@@ -42,7 +42,16 @@
                     <td>{{ employee.road_number }}</td>
                     <td>{{ employee.house_number }}</td>
                     <td>{{ employee.expire_date }}</td>
-                    <td>{% if employee.is_active %} Active {% else %} Expired {% endif %}</td>
+                    <td>
+                        <a class="hyp_text" href="/employee/{{ employee.rfid_card }}">
+                            {% if employee.is_active %}
+                                Active
+                            {% else %}
+                                Expired
+                            {% endif %}
+                        </a>
+                    </td>
+
                 </tr>
                 {% endfor %}
             </tbody>

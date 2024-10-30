@@ -1,4 +1,5 @@
 # employees/views.py
+from http.client import HTTPResponse
 from django.shortcuts import render, redirect
 from .models import Employee
 from .forms import EmployeeForm
@@ -71,7 +72,6 @@ def add_employee_to_zkteco(employee):
             print("Disconnected from ZKTeco machine.")
 
 
-
 # View to handle employee form submission
 def employee_create_view(request):
     if request.method == 'POST':
@@ -128,3 +128,25 @@ def user_list_view(request):
             print("Disconnected from ZKTeco machine.")
 
     return render(request, 'employees/user_list.html', {'users': users})
+
+
+from django.http import HttpResponse
+
+def single_user(request, pk):
+    single_employee = Employee.objects.get(rfid_card = pk)
+    context = {"single_employee":single_employee}
+    return render(request,'employees/single_user.html',context)
+
+
+def toggle_employee_status(request,pk):
+    employee = Employee.objects.get(rfid_card = pk)
+
+    # Check the selected action from the form and update the `is_active` status
+    action = request.POST.get('action')
+    if action == 'activate':
+        print("Done")
+    elif action == 'deactivate':
+        print("Fail")
+    employee.save()
+
+    return redirect('single_user', pk=pk)
