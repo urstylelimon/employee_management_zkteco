@@ -11,7 +11,7 @@
     <p>RFID Card: {{ single_employee.rfid_card }}</p>
     <p>Status: {% if single_employee.is_active %}Active{% else %}Expired{% endif %}</p>
     
-    <form action="{% url 'toggle_employee_status' single_employee.pk %}" method="post">
+    <form action="/employee/{{ single_employee.rfid_card }}/toggle-status/" method="post">
         {% csrf_token %}
         <label>
             <input type="radio" name="action" value="activate" {% if single_employee.is_active %}checked{% endif %}>

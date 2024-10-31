@@ -1,9 +1,10 @@
 # employees/views.py
 from http.client import HTTPResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from .models import Employee
 from .forms import EmployeeForm
 from zk import ZK
+from django.views.decorators.http import require_POST
 def home_page(request):
     context = {
         'total_employee_count': 100,
@@ -137,16 +138,23 @@ def single_user(request, pk):
     context = {"single_employee":single_employee}
     return render(request,'employees/single_user.html',context)
 
-
-def toggle_employee_status(request,pk):
-    employee = Employee.objects.get(rfid_card = pk)
+@require_POST
+def toggle_employee_status(request, pk):
+    print("My RFID Card : ",pk)
+    # Fetch the employee object by RFID card (assuming `pk` is the RFID here)
+    employee = get_object_or_404(Employee, rfid_card=pk)
 
     # Check the selected action from the form and update the `is_active` status
     action = request.POST.get('action')
     if action == 'activate':
-        print("Done")
+        employee.is_active = True
+        print("Employee activated")
     elif action == 'deactivate':
-        print("Fail")
+        employee.is_active = False
+        print("Employee deactivated")
+
+    # Save the updated status to the database
     employee.save()
 
+    # Redirect back to the employee details page
     return redirect('single_user', pk=pk)
